@@ -96,10 +96,30 @@ function getPasswordOptions() {
 
   if (isNaN(passwordLength) || passwordLength < 8 || passwordLength > 128) {
     alert('Invalid input. Password length must be a number between 8 and 128.');
-    return null;
+    return;
   }
 
+  else {
 
+    var uppercaseOptions = confirm('Do you want to include uppercase characters in your password?');
+    var lowercaseOptions = confirm('Do you want to include lowercase characters in your password?');
+    var numericOptions = confirm('Do you want to include numbers in your password?');
+    var symbolsOptions = confirm('Do you want to include special characters in your password?');
+
+
+    if (uppercaseOptions == false && lowercaseOptions == false && numericOptions == false && symbolsOptions == false) {
+      alert('At least one option must be selected.');
+      return;
+    }
+
+  }
+
+  return {
+    passwordLength: passwordLength,
+    uppercaseOptions: uppercaseOptions,
+    lowercaseOptions: lowercaseOptions,
+    numericOptions: numericOptions,
+    symbolsOptions: symbolsOptions};
 }
 
 // Function for getting a random element from an array
