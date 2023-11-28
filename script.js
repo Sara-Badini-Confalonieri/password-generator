@@ -96,7 +96,7 @@ function getPasswordOptions() {
 
   if (isNaN(passwordLength) || passwordLength < 8 || passwordLength > 128) {
     alert('Invalid input. Password length must be a number between 8 and 128.');
-    return;
+    return null;
   }
 
   else {
@@ -109,7 +109,7 @@ function getPasswordOptions() {
 
     if (uppercaseOptions == false && lowercaseOptions == false && numericOptions == false && symbolsOptions == false) {
       alert('At least one option must be selected.');
-      return;
+      return null;
     }
 
   }
@@ -119,17 +119,44 @@ function getPasswordOptions() {
     uppercaseOptions: uppercaseOptions,
     lowercaseOptions: lowercaseOptions,
     numericOptions: numericOptions,
-    symbolsOptions: symbolsOptions};
+    symbolsOptions: symbolsOptions
+  };
 }
 
 // Function for getting a random element from an array
 function getRandom(arr) {
-
+  var randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
 }
 
 // Function to generate password with user input
 function generatePassword() {
+  var options = getPasswordOptions();
+  var optionsSelected = [];
 
+  if (options.lowercaseOptions) {
+    optionsSelected = optionsSelected.concat(lowerCasedCharacters);
+  }
+
+  if (options.uppercaseOptions) {
+    optionsSelected = optionsSelected.concat(upperCasedCharacters);
+  }
+
+  if (options.numericOptions) {
+    optionsSelected = optionsSelected.concat(numericCharacters);
+  }
+
+  if (options.symbolsOptions) {
+    optionsSelected = optionsSelected.concat(specialCharacters);
+  }
+
+  var generatedPassword = '';
+  for (var i = 0; i < options.passwordLength; i++) {
+    var randomChar = getRandom(optionsSelected);
+    generatedPassword += randomChar;
+  }
+
+  return generatedPassword;
 }
 
 // Get references to the #generate element
